@@ -2,6 +2,7 @@ import React from "react";
 import TodoCart from "./TodoCart";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { Plus } from "lucide-react";
+import { useBoardStore } from "@/store/BoardStore";
 
 type Props = {
   id: TypedColumn;
@@ -16,6 +17,7 @@ const idToColumnText: {
   done: "Done",
 };
 const Column = ({ id, todos, index }: Props) => {
+  const [searchString] = useBoardStore((state) => [state.searchString]);
   return (
     <>
       <Draggable draggableId={id} index={index}>
@@ -45,6 +47,15 @@ const Column = ({ id, todos, index }: Props) => {
                   <div className="">
                     {/* map method */}
                     {todos.map((todo, index) => {
+                      if (
+                        searchString &&
+                        !todo.title
+                          .toLowerCase()
+                          .includes(searchString.toLowerCase())
+                      ) {
+                        return null;
+                      }
+
                       return (
                         <Draggable
                           key={todo.$id}
@@ -64,7 +75,6 @@ const Column = ({ id, todos, index }: Props) => {
                         </Draggable>
                       );
                     })}
-                  
 
                     {provided.placeholder}
                     <div className="flex  items-end justify-end p-2">
