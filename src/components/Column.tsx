@@ -46,7 +46,9 @@ const [openModel] =useModalStore(state=>[state.openModel])
                     {idToColumnText[id]}
 
                     <span className="text-gray-700 bg-gray-200 rounded-full h-6 w-6 text-center text-sm font-normal">
-                      2
+                      {
+                        !searchString?todos.length:todos.filter((todo)=>todo.title.toLowerCase().includes(searchString.toLowerCase())).length
+                      }
                     </span>
                   </h2>
 

@@ -20,6 +20,8 @@ interface BoardState {
   deleteTask: (taskIndex: number, todoId: Todo, id: TypedColumn) => void;
 
   updateTodoInDB: (todo: Todo, columnId: TypedColumn) => void;
+
+  setBoardState: (board: Board) => void;
 }
 export const useBoardStore = create<BoardState>((set, get) => ({
   board: {
@@ -34,6 +36,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
     const board = await getTodosGroupByColumn();
     set({ board });
   },
+  setBoardState: (board) => set({ board }),
   setNewTaskType: (columnId: TypedColumn) => set({ newTaskType: columnId }),
   setNewTaskInput: (input: string) => set({ newTaskInput: input }),
   setImage: (image: File | null) => set({ image }),
