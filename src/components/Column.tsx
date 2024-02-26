@@ -3,6 +3,7 @@ import TodoCart from "./TodoCart";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { Plus } from "lucide-react";
 import { useBoardStore } from "@/store/BoardStore";
+import { useModalStore } from "@/store/ModalStore";
 
 type Props = {
   id: TypedColumn;
@@ -17,7 +18,12 @@ const idToColumnText: {
   done: "Done",
 };
 const Column = ({ id, todos, index }: Props) => {
-  const [searchString] = useBoardStore((state) => [state.searchString]);
+  const [searchString, setNewTaskType] = useBoardStore((state) => [state.searchString, state.setNewTaskType]);
+const [openModel] =useModalStore(state=>[state.openModel])
+  const handleAddTodo =()=>{
+    setNewTaskType(id)
+    openModel()
+  }
   return (
     <>
       <Draggable draggableId={id} index={index}>
@@ -78,8 +84,8 @@ const Column = ({ id, todos, index }: Props) => {
 
                     {provided.placeholder}
                     <div className="flex  items-end justify-end p-2">
-                      <button className="bg-[#0efb16] hover:bg-[#00b500] rounded-full p-1">
-                        <Plus size={16} color="white" />
+                      <button className="bg-[#0efb16] hover:bg-[#00b500] rounded-full p-1" onClick={handleAddTodo}>
+                        <Plus size={16} color="white"  />
                       </button>
                     </div>
                   </div>

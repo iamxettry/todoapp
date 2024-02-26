@@ -9,8 +9,6 @@ const Header = () => {
     state.searchString,
     state.setSearchString
   ])
-
-  console.log(searchString);
   
   return (
     <header className="p-4 border-b shadow-md border-black/10">

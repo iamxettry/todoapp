@@ -8,7 +8,6 @@ import { useEffect } from "react";
 
 const Board = () => {
   const [board, getBoard] = useBoardStore((state) => [state.board , state.getBoard]);
-  console.log(board);
   
   useEffect(()=>{
     getBoard()
