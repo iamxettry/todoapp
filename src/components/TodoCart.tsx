@@ -8,6 +8,7 @@ import {
   DraggableProvidedDraggableProps,
 } from "react-beautiful-dnd";
 import getUrl from "@/lib/getUrl";
+import { useBoardStore } from "@/store/BoardStore";
 type Props = {
   todo:Todo,
   id: TypedColumn;
@@ -25,6 +26,7 @@ const TodoCart = ({
   draggableProps,
 }: Props) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const deleteTask =useBoardStore(state=>state.deleteTask)
   useEffect(()=>{
     if (todo.image) {
       const fetchImage=async ()=>{
@@ -46,7 +48,7 @@ const TodoCart = ({
     >
       <div className="flex justify-between items-center p-5">
         <p>{todo.title}</p>
-        <button className="bg-[#fb0e0e] hover:bg-[#d40101] rounded-full p-1 ">
+        <button className="bg-[#fb0e0e] hover:bg-[#d40101] rounded-full p-1 " onClick={() => deleteTask(index, todo, id)}>
           <X color="white" size={16} />
         </button>
       </div>
@@ -57,6 +59,7 @@ const TodoCart = ({
             alt="Task Image"
             width={400}
             height={200}
+            priority
             className="w-full object-contain rounded-b-md"
           />
         </div>
