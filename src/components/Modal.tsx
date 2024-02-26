@@ -13,12 +13,14 @@ const Modal = () => {
     state.isOpen,
     state.closeModel,
   ]);
-  const [newTaskInput, setNewTaskInput, image, setImage] = useBoardStore(
+  const [newTaskInput, setNewTaskInput, image, setImage, addTask, newTaskType] = useBoardStore(
     (state) => [
       state.newTaskInput,
       state.setNewTaskInput,
       state.image,
       state.setImage,
+      state.addTask, 
+      state.newTaskType
     ]
   );
 
@@ -28,6 +30,7 @@ const Modal = () => {
       return;
     }
     // add task
+    addTask(newTaskInput,newTaskType,image)
 
     setImage(null)
     closeModel()

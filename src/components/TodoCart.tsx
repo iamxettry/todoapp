@@ -1,12 +1,13 @@
 "use client";
 
 import { X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   DraggableProvidedDragHandleProps,
   DraggableProvidedDraggableProps,
 } from "react-beautiful-dnd";
+import getUrl from "@/lib/getUrl";
 type Props = {
   todo:Todo,
   id: TypedColumn;
@@ -24,6 +25,18 @@ const TodoCart = ({
   draggableProps,
 }: Props) => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  useEffect(()=>{
+    if (todo.image) {
+      const fetchImage=async ()=>{
+        const url=await getUrl(todo.image!)
+        if (url) {
+          setImageUrl(url.toString());
+        }
+      };
+      fetchImage();
+
+    }
+  },[todo])
   return (
     <div
       className="bg-white rounded-md space-y-2 drop-shadow-md my-2  "
@@ -40,7 +53,7 @@ const TodoCart = ({
       {imageUrl && (
         <div className=" h-full w-full rounded-b-md">
           <Image
-            src={"imageUrl"}
+            src={imageUrl}
             alt="Task Image"
             width={400}
             height={200}
